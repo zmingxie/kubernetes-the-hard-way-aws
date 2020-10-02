@@ -1,0 +1,12 @@
+# Ignore temp terraform file
+.terraform
+terraform.tfstate
+*.tfstate*
+terraform.tfvars
+
+# Mac file
+.DS_Store
+
+# Vim Swap
+*.swp
+
