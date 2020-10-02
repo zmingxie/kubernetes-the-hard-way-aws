@@ -10,3 +10,5 @@ terraform.tfvars
 # Vim Swap
 *.swp
 
+# Host private key file
+kubernetes_ec2_private_key.pem
