@@ -2,6 +2,11 @@
 resource "null_resource" "kubeconfig_worker" {
   depends_on = [null_resource.ca_pem, null_resource.worker_pem]
   count      = 3
+  # FIXME: This could fail with an error like $HOME/.kube/config.lock exists
+  #       This is because terraform tries to create all items in parallel.
+  #       We should add the lock check here to avoid the error.
+  #
+  #       For now, a workaround would be running `terraform apply -parallelism=1`
   provisioner "local-exec" {
     command = <<EOF
 cd ${path.module}/certs &&
