@@ -32,12 +32,7 @@ resource "aws_security_group_rule" "allow_ssh" {
   to_port           = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.kubernetes_sg.id
-<<<<<<< HEAD
-  # cidr_blocks       = ["0.0.0.0/0"]
-  cidr_blocks       = ["69.165.242.100/32"]
-=======
   cidr_blocks       = ["0.0.0.0/0"]
->>>>>>> 69588aa... Fixup
 }
 
 resource "aws_security_group_rule" "allow_ingress_6443" {
