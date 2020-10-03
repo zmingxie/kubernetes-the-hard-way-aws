@@ -12,3 +12,4 @@ terraform.tfvars
 
 # Generated PEM files
 *.pem
+*.id_rsa
