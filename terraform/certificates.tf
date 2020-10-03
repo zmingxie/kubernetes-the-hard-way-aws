@@ -125,7 +125,7 @@ EOF
 }
 
 # Distribute server certs to controller nodes
-resource "null_resource" "controller_scp" {
+resource "null_resource" "controller_scp_certs" {
   depends_on = [null_resource.ca_pem, null_resource.kube_api_pem, null_resource.kube_sa_pem]
   count      = 3
   provisioner "local-exec" {
@@ -142,14 +142,12 @@ EOF
 }
 
 # Distribute client certs to worker nodes
-resource "null_resource" "worker_scp" {
-  depends_on = [null_resource.ca_pem, null_resource.worker_pem]
+resource "null_resource" "worker_scp_certs" {
+  depends_on = [null_resource.ca_pem, null_resource.worker_pem, null_resource.controller_scp_certs]
   count      = 3
   provisioner "local-exec" {
     command = <<EOF
 cd ${path.module}/certs &&
-echo "${tls_private_key.kubernetes.private_key_pem}" > ./kubernetes.id_rsa &&
-chmod 600 kubernetes.id_rsa &&
 scp -i kubernetes.id_rsa -o StrictHostKeyChecking=no \
   ca.pem worker-${count.index}-key.pem worker-${count.index}.pem \
   ubuntu@${aws_instance.kubernetes_worker[count.index].public_ip}:~/

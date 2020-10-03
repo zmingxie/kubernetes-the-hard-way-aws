@@ -4,9 +4,9 @@ output "kubernetes_public_address" {
 }
 
 output "kubernetes_controller_public_ip" {
-  value = aws_instance.kubernetes_controller.*.public_ip
+  value = aws_instance.kubernetes_controller[*].public_ip
 }
 
 output "kubernetes_worker_public_ip" {
-  value = aws_instance.kubernetes_worker.*.public_ip
+  value = aws_instance.kubernetes_worker[*].public_ip
 }
